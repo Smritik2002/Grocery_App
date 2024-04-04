@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class GroceryItemTile extends StatelessWidget {
   final String itemName;
   final String itemPrice;
 
   final String imagepath;
-  final color;
-  void Function() onPressed;
+  final Color color;
+  final Function() onPressed;
   // void Function()? onPressed;
 
-  GroceryItemTile({
+  const GroceryItemTile({
     super.key,
     required this.itemName,
     required this.itemPrice,
@@ -26,7 +25,9 @@ class GroceryItemTile extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(0.2),
         decoration: BoxDecoration(
-            color: color[100], borderRadius: BorderRadius.circular(12)),
+          color: color.withOpacity(0.4),
+          borderRadius: BorderRadius.circular(12),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -36,13 +37,10 @@ class GroceryItemTile extends StatelessWidget {
             ),
             Text(itemName),
             MaterialButton(
-              onPressed: () {
-                print('clicked');
-                onPressed;
-              },
+              onPressed: onPressed,
               color: color,
               child: Text(
-                '\$' + itemPrice,
+                '\$$itemPrice',
                 style: const TextStyle(
                     color: Colors.white, fontWeight: FontWeight.bold),
               ),

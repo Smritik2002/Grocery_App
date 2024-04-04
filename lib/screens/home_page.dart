@@ -39,19 +39,20 @@ class _HomePageState extends State<HomePage> {
             height: 67,
           ),
           ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginPage(),
-                    ));
-              },
-              style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.deepPurple)),
-              child: const Text(
-                'Get Started',
-                style: TextStyle(color: Colors.white),
-              ))
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginPage(),
+                  ));
+            },
+            style: const ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Colors.deepPurple)),
+            child: const Text(
+              'Get Started',
+              style: TextStyle(color: Colors.white),
+            ),
+          )
         ],
       ),
     );

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class CartModel extends ChangeNotifier {
   final List _shopItems = [
-    //itemName , itemPrice , itemPath , color
     ["Apple", "15", "assets/images/apple1.png", Colors.red],
     ["Watermelon", "15", "assets/images/watermelon.png", Colors.green],
     ["Banana", "15", "assets/images/banana.png", Colors.yellow],
@@ -14,7 +13,8 @@ class CartModel extends ChangeNotifier {
     ["Avocado", "15", "assets/images/avocado.png", Colors.greenAccent],
     ["Litchi", "15", "assets/images/Litchi.png", Colors.redAccent],
   ];
-  List _cartItems = [];
+
+  final List _cartItems = [];
 
   get shopItems => _shopItems;
 
@@ -22,7 +22,6 @@ class CartModel extends ChangeNotifier {
 
   void addItemsToCart(int index) {
     _cartItems.add(_shopItems[index]);
-    print('added item $index');
     notifyListeners();
   }
 
