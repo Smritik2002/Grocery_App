@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CartModel extends ChangeNotifier {
   final List _shopItems = [
-    ["Apple", "15", "assets/images/apple1.png", Colors.red],
+    ["Apple", "5", "assets/images/apple1.png", Colors.red],
     ["Watermelon", "15", "assets/images/watermelon.png", Colors.green],
     ["Banana", "15", "assets/images/banana.png", Colors.yellow],
     ["Orange", "35", "assets/images/orange.png", Colors.orange],
@@ -14,14 +14,20 @@ class CartModel extends ChangeNotifier {
     ["Litchi", "15", "assets/images/Litchi.png", Colors.redAccent],
   ];
 
+  List _filteredItems = [];
+
   final List _cartItems = [];
 
-  get shopItems => _shopItems;
+  CartModel() {
+    _filteredItems = _shopItems;
+  }
+
+  get shopItems => _filteredItems;
 
   get cartItems => _cartItems;
 
   void addItemsToCart(int index) {
-    _cartItems.add(_shopItems[index]);
+    _cartItems.add(_filteredItems[index]);
     notifyListeners();
   }
 
@@ -36,5 +42,37 @@ class CartModel extends ChangeNotifier {
       totalPrice += double.parse(_cartItems[i][1]);
     }
     return totalPrice.toStringAsFixed(2);
+  }
+
+  void searchItems(String query) {
+    if (query.isEmpty) {
+      _filteredItems = _shopItems;
+    } else {
+      _filteredItems = _shopItems
+          .where((item) =>
+              item[0].toString().toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    }
+    notifyListeners();
+  }
+
+  // Bubble Sort algorithm to sort items by price
+  void sortItemsByPrice(bool ascending) {
+    int n = _filteredItems.length;
+    for (int i = 0; i < n - 1; i++) {
+      for (int j = 0; j < n - i - 1; j++) {
+        int currentPrice = int.parse(_filteredItems[j][1]);
+        int nextPrice = int.parse(_filteredItems[j + 1][1]);
+
+        if ((ascending && currentPrice > nextPrice) ||
+            (!ascending && currentPrice < nextPrice)) {
+          // Swap items
+          var temp = _filteredItems[j];
+          _filteredItems[j] = _filteredItems[j + 1];
+          _filteredItems[j + 1] = temp;
+        }
+      }
+    }
+    notifyListeners();
   }
 }
