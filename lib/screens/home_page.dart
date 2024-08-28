@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                   ));
             },
             style: const ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Colors.deepPurple)),
+                backgroundColor: WidgetStatePropertyAll(Colors.deepPurple)),
             child: const Text(
               'Get Started',
               style: TextStyle(color: Colors.white),
