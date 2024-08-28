@@ -19,7 +19,7 @@ class MyButton extends StatelessWidget {
               ));
         },
         style: const ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(Colors.black)),
+            backgroundColor: WidgetStatePropertyAll(Colors.black)),
         child: const Text(
           'Login',
           style: TextStyle(color: Colors.white),
