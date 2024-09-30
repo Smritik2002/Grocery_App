@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               MyTextField(
                 controller: usernameController,
-                hintText: 'Username',
+                hintText: 'Enter your Username',
                 obscureText: false,
               ),
               const SizedBox(
@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               MyTextField(
                 controller: passwordController,
-                hintText: 'Password',
+                hintText: 'Enter your Password',
                 obscureText: true,
               ),
               const SizedBox(
