@@ -1,0 +1,102 @@
+[
+  {
+    "model": "api.shopitem",
+    "pk": 1,
+    "fields": {
+      "name": "Apple",
+      "price": "5",
+      "image": "assets/images/apple1.png",
+      "color": "red"
+    }
+  },
+  {
+    "model": "api.shopitem",
+    "pk": 2,
+    "fields": {
+      "name": "Watermelon",
+      "price": "15",
+      "image": "assets/images/watermelon.png",
+      "color": "green"
+    }
+  },
+  {
+    "model": "api.shopitem",
+    "pk": 3,
+    "fields": {
+      "name": "Banana",
+      "price": "15",
+      "image": "assets/images/banana.png",
+      "color": "yellow"
+    }
+  },
+  {
+    "model": "api.shopitem",
+    "pk": 4,
+    "fields": {
+      "name": "Orange",
+      "price": "35",
+      "image": "assets/images/orange.png",
+      "color": "orange"
+    }
+  },
+  {
+    "model": "api.shopitem",
+    "pk": 5,
+    "fields": {
+      "name": "Cherry",
+      "price": "35",
+      "image": "assets/images/cherry1.png",
+      "color": "red"
+    }
+  },
+  {
+    "model": "api.shopitem",
+    "pk": 6,
+    "fields": {
+      "name": "Chicken",
+      "price": "15",
+      "image": "assets/images/chicken.png",
+      "color": "redAccent"
+    }
+  },
+  {
+    "model": "api.shopitem",
+    "pk": 7,
+    "fields": {
+      "name": "Cabbage",
+      "price": "15",
+      "image": "assets/images/cabbage.png",
+      "color": "greenAccent"
+    }
+  },
+  {
+    "model": "api.shopitem",
+    "pk": 8,
+    "fields": {
+      "name": "Potato",
+      "price": "15",
+      "image": "assets/images/potato.png",
+      "color": "brown"
+    }
+  },
+  {
+    "model": "api.shopitem",
+    "pk": 9,
+    "fields": {
+      "name": "Avocado",
+      "price": "15",
+      "image": "assets/images/avocado.png",
+      "color": "greenAccent"
+    }
+  },
+  {
+    "model": "api.shopitem",
+    "pk": 10,
+    "fields": {
+      "name": "Litchi",
+      "price": "15",
+      "image": "assets/images/Litchi.png",
+      "color": "redAccent"
+    }
+  }
+]
