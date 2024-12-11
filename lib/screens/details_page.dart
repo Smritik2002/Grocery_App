@@ -26,6 +26,76 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.teal,
+          title: const Text("Shop"),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () {
+                // Implement search functionality here
+              },
+            ),
+          ],
+        ),
+        drawer: Drawer(
+          child: ListView(
+            children: [
+              const DrawerHeader(
+                decoration: BoxDecoration(color: Colors.teal),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.shopping_bag,
+                      size: 60,
+                      color: Colors.white,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      "E-Commerce App",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.home),
+                title: const Text('Home'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.shopping_cart),
+                title: const Text('Cart'),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => const CartPage(),
+                  ));
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.person),
+                title: const Text('Profile'),
+                onTap: () {
+                  // Navigate to Profile page
+                },
+              ),
+              const Divider(),
+              ListTile(
+                leading: const Icon(Icons.logout),
+                title: const Text('Logout'),
+                onTap: () {
+                  // Handle logout
+                },
+              ),
+            ],
+          ),
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => Navigator.push(context, MaterialPageRoute(
             builder: (context) {
@@ -50,11 +120,10 @@ class _DetailsPageState extends State<DetailsPage> {
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return const Center(child: Text('No items found.'));
               }
-
               final shopItems = snapshot.data!;
               return GridView.builder(
                 itemCount: shopItems.length,
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(10),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 1 / 1.4,
@@ -62,9 +131,10 @@ class _DetailsPageState extends State<DetailsPage> {
                 itemBuilder: (context, index) {
                   final item = shopItems[index];
                   return GroceryItemTile(
+                    itemdescription: item.description,
                     itemName: item.name,
                     itemPrice: item.price.toString(),
-                    imagepath: item.image, 
+                    imagepath: item.image,
                     color: item.color,
                     onPressed: () {
                       Provider.of<CartModel>(context, listen: false)
