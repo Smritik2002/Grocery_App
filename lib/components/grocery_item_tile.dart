@@ -1,3 +1,4 @@
+import 'package:ecommerceapp/screens/description.dart';
 import 'package:flutter/material.dart';
 
 class GroceryItemTile extends StatelessWidget {
@@ -6,6 +7,7 @@ class GroceryItemTile extends StatelessWidget {
   final String imagepath;
   final String color;
   final Function() onPressed;
+  final String itemdescription;
 
   const GroceryItemTile({
     super.key,
@@ -14,6 +16,7 @@ class GroceryItemTile extends StatelessWidget {
     required this.imagepath,
     required this.color,
     required this.onPressed,
+    required this.itemdescription,
   });
 
   Color _getColorFromString(String colorString) {
@@ -47,30 +50,41 @@ class GroceryItemTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        padding: const EdgeInsets.all(0.2),
-        decoration: BoxDecoration(
-          color: _getColorFromString(color), // Use the function to get Color
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Image.asset(
-              imagepath,
-              height: 94,
-            ),
-            Text(itemName),
-            MaterialButton(
-              onPressed: onPressed,
-              child: Text(
-                '\$$itemPrice',
-                style: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold),
+      child: GestureDetector(
+        child: Container(
+          padding: const EdgeInsets.all(0.2),
+          decoration: BoxDecoration(
+            color: _getColorFromString(color), 
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Image.asset(
+                imagepath,
+                height: 99,
               ),
-            )
-          ],
+              Text(itemName),
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white
+                ),
+                child: MaterialButton(
+                  onPressed: onPressed,
+                  child: Text(
+                    'Buy \$$itemPrice',
+                    style: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) =>  Description(color: color, itemName: itemName, itemPrice: itemPrice, imagepath: imagepath
+          , itemdescription: itemdescription,)));
+        },
       ),
     );
   }
