@@ -26,3 +26,19 @@ class ShopItem {
     );
   }
 }
+
+class RatingModel {
+  final int id;
+  final int rating;
+  final int shopItem;
+
+  RatingModel({required this.id, required this.rating, required this.shopItem});
+
+  factory RatingModel.fromJson(Map<String, dynamic> json) {
+    return RatingModel(
+      id: json['id'],
+      rating: json['Rating'],
+      shopItem: json['ShopItem'],
+    );
+  }
+}

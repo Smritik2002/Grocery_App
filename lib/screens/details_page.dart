@@ -131,6 +131,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 itemBuilder: (context, index) {
                   final item = shopItems[index];
                   return GroceryItemTile(
+                    id : item.id,
                     itemdescription: item.description,
                     itemName: item.name,
                     itemPrice: item.price.toString(),

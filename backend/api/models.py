@@ -13,3 +13,8 @@ class ShopItem(models.Model):
     def __str__(self):
         return self.name
     
+class Rating(models.Model):
+    Rating = models.IntegerField()
+    ShopItem = models.ForeignKey(ShopItem, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.ShopItem.name

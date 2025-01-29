@@ -2,6 +2,7 @@ import 'package:ecommerceapp/screens/description.dart';
 import 'package:flutter/material.dart';
 
 class GroceryItemTile extends StatelessWidget {
+  final int id;
   final String itemName;
   final String itemPrice;
   final String imagepath;
@@ -11,6 +12,7 @@ class GroceryItemTile extends StatelessWidget {
 
   const GroceryItemTile({
     super.key,
+    required this.id,
     required this.itemName,
     required this.itemPrice,
     required this.imagepath,
@@ -82,7 +84,7 @@ class GroceryItemTile extends StatelessWidget {
           ),
         ),
         onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) =>  Description(color: color, itemName: itemName, itemPrice: itemPrice, imagepath: imagepath
+          Navigator.push(context, MaterialPageRoute(builder: (context) =>  Description(color: color, itemName: itemName, itemPrice: itemPrice, imagepath: imagepath, id: id
           , itemdescription: itemdescription,)));
         },
       ),
