@@ -1,8 +1,11 @@
 import 'package:ecommerceapp/screens/cart_page.dart';
+import 'package:ecommerceapp/service/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:ecommerceapp/model/shop_model.dart';
 
 class Description extends StatefulWidget {
+  final int id;
   final String itemName;
   final String itemPrice;
   final String imagepath;
@@ -11,6 +14,7 @@ class Description extends StatefulWidget {
 
   const Description({
     super.key,
+    required this.id,
     required this.itemName,
     required this.itemPrice,
     required this.imagepath,
@@ -23,6 +27,41 @@ class Description extends StatefulWidget {
 }
 
 class _DescriptionState extends State<Description> {
+  double _rating = 0.0;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadRating();
+  }
+
+  void _loadRating() async {
+    try {
+      List<RatingModel> ratingsList = await ApiService().ratings(); // Fetch ratings
+
+      // Find the matching rating
+      RatingModel? shopRating = ratingsList.firstWhere(
+        (r) => r.shopItem == widget.id,
+        orElse: () => RatingModel(id: 0, rating: 0, shopItem: widget.id), // Default
+      );
+
+      if (mounted) {
+        setState(() {
+          _rating = shopRating.rating.toDouble(); // Convert to double
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      print("Error fetching rating: $e");
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,14 +77,9 @@ class _DescriptionState extends State<Description> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-
-              // Product Details Card
               _buildProductDetailsCard(),
               const SizedBox(height: 30),
-
-              // Recommendation Section
               const RecommendationSection(),
-
               const SizedBox(height: 20),
             ],
           ),
@@ -94,7 +128,6 @@ class _DescriptionState extends State<Description> {
                     color: Colors.black,
                   ),
                 ),
-                
                 Text(
                   '\$${widget.itemPrice}',
                   style: const TextStyle(
@@ -105,13 +138,12 @@ class _DescriptionState extends State<Description> {
                 ),
               ],
             ),
-            const SizedBox(height: 5,),
+            const SizedBox(height: 5),
             const Divider(
               thickness: 2.2,
               color: Colors.black,
             ),
             const SizedBox(height: 10),
-            const SizedBox(height: 8),
             Text(
               widget.itemdescription,
               style: const TextStyle(
@@ -119,7 +151,29 @@ class _DescriptionState extends State<Description> {
                 color: Colors.black,
               ),
             ),
+            const SizedBox(height: 20),
 
+            // Rating Bar
+            Center(
+              child: _isLoading
+                  ? const CircularProgressIndicator() // Show loading indicator
+                  : RatingBar.builder(
+                      ignoreGestures: true, // Make it read-only
+                      initialRating: _rating,
+                      minRating: 0,
+                      direction: Axis.horizontal,
+                      itemCount: 5,
+                      allowHalfRating: true,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        print('Rating: $rating');
+                      },
+                    ),
+            ),
             const SizedBox(height: 20),
 
             // Buy Now Button
@@ -131,8 +185,7 @@ class _DescriptionState extends State<Description> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                onPressed: () {
-                },
+                onPressed: () {},
                 child: const Text(
                   'Buy Now',
                   style: TextStyle(
@@ -140,23 +193,6 @@ class _DescriptionState extends State<Description> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Center(
-              child: RatingBar.builder(
-                initialRating: 1,
-                minRating: 1,
-                direction: Axis.horizontal,
-                itemCount: 5,
-                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                itemBuilder: (context, _) => const Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                onRatingUpdate: (rating) {
-                  print('Rating: $rating');
-                },
               ),
             ),
           ],
@@ -185,8 +221,6 @@ class _DescriptionState extends State<Description> {
         return Colors.purple;
       case 'black':
         return Colors.black;
-      case 'black':
-        return Colors.black;
       default:
         return Colors.grey;
     }
@@ -202,17 +236,14 @@ class RecommendationSection extends StatelessWidget {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-         Text(
+        Text(
           "Recommendations",
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
-         SizedBox(height: 10),
-
-        // Placeholder for recommendations
-       
+        SizedBox(height: 10),
       ],
     );
   }
