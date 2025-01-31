@@ -17,14 +17,23 @@ class ShopItem {
 
   factory ShopItem.fromJson(Map<String, dynamic> json) {
     return ShopItem(
-      id: json['id'],
-      name: json['name'],
-      price: json['price'],
-      image: json['image'],
-      color: json['color'],
-      description: json['description'],
+      id: json['id']?? "",
+      name: json['name']??"",
+      price: json['price']??"",
+      image: json['image']??"",
+      color: json['color']??"",
+      description: json['description']??"",
     );
   }
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'price': price,
+      'image': image,
+    };
+  }
+
 }
 
 class RatingModel {
@@ -39,6 +48,22 @@ class RatingModel {
       id: json['id'],
       rating: json['Rating'],
       shopItem: json['ShopItem'],
+    );
+  }
+}
+class Recommendation {
+  final int id;
+  final String name;
+  final double similarity;
+
+  Recommendation({required this.id, required this.name, required this.similarity});
+
+  // Factory method to create an instance from JSON
+  factory Recommendation.fromJson(Map<String, dynamic> json) {
+    return Recommendation(
+      id: json['id'],
+      name: json['name'],
+      similarity: (json['similarity'] as num).toDouble(),
     );
   }
 }
