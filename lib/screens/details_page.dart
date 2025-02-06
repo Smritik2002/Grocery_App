@@ -123,10 +123,10 @@ class _DetailsPageState extends State<DetailsPage> {
               final shopItems = snapshot.data!;
               return GridView.builder(
                 itemCount: shopItems.length,
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(2),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 1 / 1.4,
+                  crossAxisCount: 3,
+                  childAspectRatio: 1 / 1.7,
                 ),
                 itemBuilder: (context, index) {
                   final item = shopItems[index];

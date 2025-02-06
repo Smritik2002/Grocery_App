@@ -2,8 +2,7 @@
 
 
 from django.urls import path
-from api.views import Getrecommendations
-
+from api.views import Getrecommendations, register_user,login
 from api import views
 
 
@@ -12,5 +11,7 @@ urlpatterns = [
     path ('shopitems/', views.ShopItemSerializer.as_view()),
     path ('rating/', views.RatingSerializer.as_view()),
     path('recommend/<int:item_id>/', Getrecommendations.as_view(), name='recommend_items'),
+    path('register/', register_user, name='register'),
+    path('login/',login, name='login'),
 ]
 
