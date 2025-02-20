@@ -12,7 +12,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
-  final TextEditingController interestController = TextEditingController();
+  List<String> selectedInterests = [];
   bool isLoading = false;
 
   Future<void> _register() async {
@@ -23,8 +23,8 @@ class _RegisterPageState extends State<RegisterPage> {
           usernameController.text,
           emailController.text,
           passwordController.text,
-          int.parse(ageController.text),  // Convert age to int
-          interestController.text,
+          int.parse(ageController.text), // Convert age to int
+          selectedInterests.join(", "), // Join selected interests with a comma
         );
 
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -45,50 +45,143 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Register")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: usernameController,
-                decoration: const InputDecoration(labelText: "Username"),
-                validator: (value) => value!.isEmpty ? "Enter a username" : null,
-              ),
-              TextFormField(
-                controller: emailController,
-                decoration: const InputDecoration(labelText: "Email"),
-                validator: (value) => value!.isEmpty ? "Enter an email" : null,
-              ),
-              TextFormField(
-                controller: passwordController,
-                decoration: const InputDecoration(labelText: "Password"),
-                obscureText: true,
-                validator: (value) => value!.length < 6 ? "Password too short" : null,
-              ),
-              TextFormField(
-                controller: ageController,
-                decoration: const InputDecoration(labelText: "Age"),
-                keyboardType: TextInputType.number,
-                validator: (value) =>
-                    value!.isEmpty ? "Enter your age" : null,
-              ),
-              TextFormField(
-                controller: interestController,
-                decoration: const InputDecoration(labelText: "Interest"),
-                validator: (value) =>
-                    value!.isEmpty ? "Enter your interest" : null,
-              ),
-              const SizedBox(height: 20),
-              isLoading
-                  ? const CircularProgressIndicator()
-                  : ElevatedButton(
-                      onPressed: _register,
-                      child: const Text("Register"),
-                    ),
-            ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blue.shade300, Colors.pink.shade300],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: isLoading
+              ? Center(child: CircularProgressIndicator())
+              : Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Card(
+                          elevation: 4.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  controller: usernameController,
+                                  decoration: const InputDecoration(
+                                    labelText: "Username",
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  validator: (value) => value!.isEmpty
+                                      ? "Enter a username"
+                                      : null,
+                                ),
+                                const SizedBox(height: 12),
+                                TextFormField(
+                                  controller: emailController,
+                                  decoration: const InputDecoration(
+                                    labelText: "Email",
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  validator: (value) => value!.isEmpty
+                                      ? "Enter an email"
+                                      : null,
+                                ),
+                                const SizedBox(height: 12),
+                                TextFormField(
+                                  controller: passwordController,
+                                  decoration: const InputDecoration(
+                                    labelText: "Password",
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  obscureText: true,
+                                  validator: (value) => value!.length < 6
+                                      ? "Password must be at least 6 characters"
+                                      : null,
+                                ),
+                                const SizedBox(height: 12),
+                                DropdownButtonFormField<int>(
+                                  decoration: const InputDecoration(
+                                    labelText: "Age",
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  items: List.generate(
+                                    100,
+                                        (index) => DropdownMenuItem<int>(
+                                      value: index + 18,
+                                      child: Text((index + 18).toString()),
+                                    ),
+                                  ),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      ageController.text = value.toString();
+                                    });
+                                  },
+                                  validator: (value) => value == null
+                                      ? "Select your age"
+                                      : null,
+                                ),
+                                const SizedBox(height: 12),
+                                Text("Select Interests", style: TextStyle(fontSize: 16)),
+                                const SizedBox(height: 8),
+                                Wrap(
+                                  spacing: 10,
+                                  children: [
+                                    ChoiceChip(
+                                      label: Text("Fruits"),
+                                      selected: selectedInterests.contains("Fruits"),
+                                      onSelected: (selected) {
+                                        setState(() {
+                                          if (selected) {
+                                            selectedInterests.add("Fruits");
+                                          } else {
+                                            selectedInterests.remove("Fruits");
+                                          }
+                                        });
+                                      },
+                                    ),
+                                    ChoiceChip(
+                                      label: Text("Vegetables"),
+                                      selected: selectedInterests.contains("Vegetables"),
+                                      onSelected: (selected) {
+                                        setState(() {
+                                          if (selected) {
+                                            selectedInterests.add("Vegetables");
+                                          } else {
+                                            selectedInterests.remove("Vegetables");
+                                          }
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 20),
+                                ElevatedButton(
+                                  onPressed: _register,
+                                  child: const Text("Register"),
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
+                                    padding: MaterialStateProperty.all(
+                                        const EdgeInsets.symmetric(vertical: 14.0)),
+                                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
         ),
       ),
     );

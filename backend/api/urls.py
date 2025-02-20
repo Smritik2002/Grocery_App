@@ -4,6 +4,7 @@
 from django.urls import path
 from api.views import Getrecommendations, register_user,login
 from api import views
+from .views import export_shopitems_to_csv
 
 
 urlpatterns = [
@@ -13,5 +14,6 @@ urlpatterns = [
     path('recommend/<int:item_id>/', Getrecommendations.as_view(), name='recommend_items'),
     path('register/', register_user, name='register'),
     path('login/',login, name='login'),
+    path('api/export-shopitems/', export_shopitems_to_csv, name='export_shopitems'),
 ]
 
