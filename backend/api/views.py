@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.shortcuts import render
 from rest_framework.generics import ListCreateAPIView
-from api.models import ShopItem
+from api.models import Profile, ShopItem
 from api.models import Rating
 from api.serializer import ShopItemSerializer
 from api.serializer import RatingSerializer
@@ -20,8 +20,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 def api_home(request):
     return HttpResponse("Hello, world. You're at the API home page.")
-
-
 
 class ShopItemSerializer(ListCreateAPIView):
     queryset = ShopItem.objects.all()
@@ -48,6 +46,8 @@ def register_user(request):
         username = request.data.get('username')
         email = request.data.get('email')
         password = request.data.get('password')
+        age = request.data.get('age')
+        interest = request.data.get('interest')
 
         if not username or not email or not password:
             return Response({"error": "Username, email, and password are required."}, status=400)
@@ -56,7 +56,9 @@ def register_user(request):
             return Response({"error": "Email already exists."}, status=400)
 
         user = User.objects.create_user(username=username, email=email, password=password)
+        Profile.objects.create(user=user,age=age,interest=interest)
         return Response({"message": "User registered successfully."}, status=201)
+
   
 @api_view(['POST'])
 def login(request):

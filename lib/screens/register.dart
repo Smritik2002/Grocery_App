@@ -11,6 +11,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
+  final TextEditingController interestController = TextEditingController();
   bool isLoading = false;
 
   Future<void> _register() async {
@@ -21,8 +23,11 @@ class _RegisterPageState extends State<RegisterPage> {
           usernameController.text,
           emailController.text,
           passwordController.text,
+          int.parse(ageController.text),  // Convert age to int
+          interestController.text,
         );
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Registration successful!"),
           backgroundColor: Colors.green,
         ));
@@ -39,35 +44,48 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Register")),
+      appBar: AppBar(title: const Text("Register")),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
               TextFormField(
                 controller: usernameController,
-                decoration: InputDecoration(labelText: "Username"),
+                decoration: const InputDecoration(labelText: "Username"),
                 validator: (value) => value!.isEmpty ? "Enter a username" : null,
               ),
               TextFormField(
                 controller: emailController,
-                decoration: InputDecoration(labelText: "Email"),
+                decoration: const InputDecoration(labelText: "Email"),
                 validator: (value) => value!.isEmpty ? "Enter an email" : null,
               ),
               TextFormField(
                 controller: passwordController,
-                decoration: InputDecoration(labelText: "Password"),
+                decoration: const InputDecoration(labelText: "Password"),
                 obscureText: true,
                 validator: (value) => value!.length < 6 ? "Password too short" : null,
               ),
-              SizedBox(height: 20),
+              TextFormField(
+                controller: ageController,
+                decoration: const InputDecoration(labelText: "Age"),
+                keyboardType: TextInputType.number,
+                validator: (value) =>
+                    value!.isEmpty ? "Enter your age" : null,
+              ),
+              TextFormField(
+                controller: interestController,
+                decoration: const InputDecoration(labelText: "Interest"),
+                validator: (value) =>
+                    value!.isEmpty ? "Enter your interest" : null,
+              ),
+              const SizedBox(height: 20),
               isLoading
-                  ? CircularProgressIndicator()
+                  ? const CircularProgressIndicator()
                   : ElevatedButton(
                       onPressed: _register,
-                      child: Text("Register"),
+                      child: const Text("Register"),
                     ),
             ],
           ),

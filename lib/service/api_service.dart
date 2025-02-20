@@ -28,23 +28,32 @@ Future<Map<String, dynamic>> login(String email, String password) async {
     }
   }
 
-  Future<Map<String, dynamic>> registerUser(
-      String username, String email, String password) async {
+ Future<Map<String, dynamic>> registerUser(
+      String username, String email, String password, int age, String interest) async {
     final url = Uri.parse("http://10.0.2.2:8000/api/register/");
     
     final response = await http.post(
       url,
       headers: {"Content-Type": "application/json"},
-      body: jsonEncode({"username": username, "email": email, "password": password}),
+      body: jsonEncode({
+        "username": username,
+        "email": email,
+        "password": password,
+        "age": age,
+        "interest": interest  // Ensure correct spelling as per your Django API
+      }),
     );
+
     print(response.body);
     print(response.statusCode);
+
     if (response.statusCode == 201) {
       return jsonDecode(response.body);
     } else {
       throw Exception("Failed to register: ${response.body}");
     }
   }
+
   Future<List<ShopItem>> getShopItems() async {
     final response = await http.get(Uri.parse('http://10.0.2.2:8000/api/shopitems/'));
     if (response.statusCode == 200) {
