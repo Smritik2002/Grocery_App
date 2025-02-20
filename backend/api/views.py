@@ -1,3 +1,4 @@
+from turtle import pd
 from rest_framework.views import APIView
 from django.http import JsonResponse
 from django.http import HttpResponse
@@ -15,6 +16,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
+from .models import ShopItem
 
 # Create your views here.
 
@@ -85,3 +87,17 @@ def login(request):
             }, status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+def export_shopitems_to_csv(request):
+    # Fetch data from database
+    items = list(ShopItem.objects.values())  # Convert QuerySet to list of dictionaries
+
+    if not items:
+        return JsonResponse({"message": "No shop items found"}, status=404)
+
+    # Convert to DataFrame and save to CSV
+    df = pd.DataFrame(items)
+    csv_filename = "shop_items.csv"
+    df.to_csv(csv_filename, index=False)
+
+    return JsonResponse({"message": f"Data saved to {csv_filename}"}, status=200)
