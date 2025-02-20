@@ -7,7 +7,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class ShopItem(models.Model):
 
     name = models.CharField(max_length=100)
-    price = models.IntegerField()
+    price = models.FloatField()
     image = models.CharField(max_length=100)
     color = models.CharField(max_length=100)
     description = models.TextField()

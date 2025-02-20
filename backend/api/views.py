@@ -5,7 +5,7 @@ from django.shortcuts import render
 from rest_framework.generics import ListCreateAPIView
 from api.models import Profile, ShopItem
 from api.serializer import ShopItemSerializer
-from api.recommendation import recommend_items
+from api.recommendation import GroceryRecommendationSystem
 from .serializer import LoginSerializer, RegisterSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -13,6 +13,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
+import pandas as pd
 
 # Create your views here.
 
@@ -35,9 +36,13 @@ class Getrecommendations(APIView):
     API endpoint to get recommended items based on a given item ID.
     """
 
-    def get(self, request, item_id):
-        recommendations = recommend_items(item_id, 5)
-        return JsonResponse({"recommendations": recommendations})
+    def get(self, request, item_id, user_id):
+        rec = GroceryRecommendationSystem()
+        item = ShopItem.objects.get(id=item_id)
+        user_based = rec.recommend_items_for_user(user_id)
+        item_based = rec.recommend_similar_items(item.name)
+        recommendation = rec.hybrid_recommend_items(item.name, 10)
+        return JsonResponse({"recommendations": recommendation})
 
 
 @api_view(['POST'])
@@ -56,6 +61,9 @@ def register_user(request):
 
     user = User.objects.create_user(username=username, email=email, password=password)
     Profile.objects.create(user=user, age=age, interest=interest)
+    new_data = pd.DataFrame([[user.id, username, email, age, interest]], columns=[
+                            'ID', 'Username', 'Email', 'Age', 'Interest'])
+    new_data.to_csv("/home/mango/django/Grocery_App/backend/data/profiles.csv", mode='a', header=False, index=False)
     return Response({"message": "User registered successfully."}, status=201)
 
 
