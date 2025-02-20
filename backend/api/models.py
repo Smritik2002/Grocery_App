@@ -1,30 +1,23 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 # Create your models here.
 
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
 
 class ShopItem(models.Model):
+
     name = models.CharField(max_length=100)
     price = models.IntegerField()
     image = models.CharField(max_length=100)
     color = models.CharField(max_length=100)
     description = models.TextField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=None, null=True)
+    rating = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(5)])
+    visit_count = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
-    
-class Rating(models.Model):
-    Rating = models.IntegerField()
-    ShopItem = models.ForeignKey(ShopItem, on_delete=models.CASCADE)
-    def __str__(self):
-        return self.ShopItem.name
-    
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     age = models.IntegerField()
