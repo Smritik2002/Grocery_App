@@ -7,8 +7,10 @@ class GroceryItemTile extends StatelessWidget {
   final String itemPrice;
   final String imagepath;
   final String color;
+  final int rating;
   final Function() onPressed;
   final String itemdescription;
+  final int user_id;
 
   const GroceryItemTile({
     super.key,
@@ -19,6 +21,8 @@ class GroceryItemTile extends StatelessWidget {
     required this.color,
     required this.onPressed,
     required this.itemdescription,
+    required this.rating,
+    required this.user_id,
   });
 
   Color _getColorFromString(String colorString) {
@@ -62,7 +66,7 @@ class GroceryItemTile extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Image.asset(
+              Image.network(
                 imagepath,
                 height: 99,
               ),
@@ -74,7 +78,7 @@ class GroceryItemTile extends StatelessWidget {
                 child: MaterialButton(
                   onPressed: onPressed,
                   child: Text(
-                    'Buy \$$itemPrice',
+                    'Rs $itemPrice',
                     style: const TextStyle(
                         color: Colors.black, fontWeight: FontWeight.bold),
                   ),
@@ -84,7 +88,12 @@ class GroceryItemTile extends StatelessWidget {
           ),
         ),
         onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) =>  Description(color: color, itemName: itemName, itemPrice: itemPrice, imagepath: imagepath, id: id
+          Navigator.push(context, MaterialPageRoute(builder: (context) =>  Description(
+            user_id: user_id,
+            item_id:id,
+            color: color, itemName: itemName, itemPrice: itemPrice, imagepath: imagepath,
+          rating:rating,
+           id: id
           , itemdescription: itemdescription,)));
         },
       ),

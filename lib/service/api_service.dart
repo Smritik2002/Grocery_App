@@ -18,10 +18,8 @@ Future<Map<String, dynamic>> login(String email, String password) async {
     );
 
     final Map<String, dynamic> responseData = jsonDecode(response.body);
-  print(responseData);
-  print(response.statusCode);
-  print(response.body);
     if (response.statusCode == 200) {
+      print(response.body);
       return {'success': true, 'message': 'Login successful', 'data': responseData};
     } else {
       return {'success': false, 'message': responseData['error'] ?? 'Login failed'};
@@ -57,6 +55,7 @@ Future<Map<String, dynamic>> login(String email, String password) async {
   Future<List<ShopItem>> getShopItems() async {
     final response = await http.get(Uri.parse('http://10.0.2.2:8000/api/shopitems/'));
     if (response.statusCode == 200) {
+      print(response.body);
       final List<dynamic> data = json.decode(response.body);
       return data.map((json) => ShopItem.fromJson(json)).toList();
     } else {
@@ -73,15 +72,51 @@ Future<List<RatingModel>> ratings() async {
     throw Exception('Failed to load shop items');
   }
 }
- Future<List<Recommendation>> fetchRecommendations(int itemId) async {
-  final response = await http.get(Uri.parse("http://10.0.2.2:8000/api/recommend/$itemId/"));
-  if (response.statusCode == 200) {
+ Future<List<Recommendation>> fetchRecommendations(int itemId, int user_id) async {
+  final response = await http.get(Uri.parse("http://10.0.2.2:8000/api/recommend/$itemId/$user_id/"));
+ if (response.statusCode == 200) {
     final Map<String, dynamic> jsonResponse = json.decode(response.body); // Decode as Map
-    final List<dynamic> data = jsonResponse["recommendations"]; // Extract the list
+    final List<dynamic> data = jsonResponse["recommendations"]; // Extract the list of lists
+    
     print(response.body);
-    return data.map((json) => Recommendation.fromJson(json)).toList();
+    
+    // Convert the list of lists into Recommendation objects
+    return data.map((item) {
+      return Recommendation(
+        name: item[0],  // First element (name)
+        score: item[1], // Second element (score)
+      );
+    }).toList();
   } else {
     throw Exception("Failed to load recommendations");
   }
 }
+Future<void> visitItem(int item_id) async {
+  final url = Uri.parse('http://10.0.2.2:8000/api/27/');
+
+  try {
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        'shop_item_id': item_id,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // Handle success response
+      print("Visit history successfully added");
+    } else {
+      // Log the full response for debugging
+      print("Failed to add visit history. Status code: ${response.statusCode}");
+      print("Response body: ${response.body}");
+    }
+  } catch (e) {
+    // Handle exceptions (like network errors)
+    print("Error: $e");
+  }
+}
+
 }

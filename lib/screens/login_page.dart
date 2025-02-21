@@ -29,18 +29,13 @@ class _LoginPageState extends State<LoginPage> {
     final result = await authService.login(email, password);
 
     if (result['success']) {
-      // Save the token for future API requests (you can use shared_preferences or any storage)
-      String token = result['data']['access_token']; 
-      // For simplicity, we can just print the token here for debugging purposes
-      print("Login successful, token: $token");
-
-      // Optionally store the token using shared_preferences or secure storage
-      // Store token in a secure storage (e.g., SharedPreferences or FlutterSecureStorage)
-
+     
       showSnackbar(result['message'], Colors.green);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => DetailsPage()), // Navigate to the HomePage
+        MaterialPageRoute(builder: (context) => DetailsPage(
+          userId: result['data']['user_id']
+        )), // Navigate to the HomePage
       );
     } else {
       showSnackbar(result['message'], Colors.red);

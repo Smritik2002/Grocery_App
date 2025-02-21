@@ -7,8 +7,8 @@ import numpy as np
 
 class GroceryRecommendationSystem:
     def __init__(self):
-        self.shopitems_df = pd.read_csv("/home/mango/django/Grocery_App/backend/data/shopitems.csv")
-        self.profiles_df = pd.read_csv("/home/mango/django/Grocery_App/backend/data/profiles.csv")
+        self.shopitems_df = pd.read_csv("E:/Grocery_App/backend/data/shopitems.csv")
+        self.profiles_df = pd.read_csv("E:/Grocery_App/backend/data/profiles.csv")
         self.user_item_matrix = self.create_user_item_matrix()
         self.user_similarity_df = self.compute_user_similarity()
         self.item_similarity_df = self.compute_item_similarity()

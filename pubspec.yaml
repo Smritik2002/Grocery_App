@@ -74,7 +74,7 @@ flutter:
     - assets/images/chicken.png
     - assets/images/potato.png
     - assets/images/avocado.png
-    - assets/images/Litchi.png
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
