@@ -128,14 +128,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 32),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ImagePng(imagepath: 'assets/images/apple.png'),
-                    SizedBox(width: 18),
-                    ImagePng(imagepath: 'assets/images/google.png'),
-                  ],
-                ),
+                // const Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     ImagePng(imagepath: 'assets/images/apple.png'),
+                //     SizedBox(width: 18),
+                //     ImagePng(imagepath: 'assets/images/google.png'),
+                //   ],
+                // ),
                 const SizedBox(height: 32),
                 Row(
   mainAxisAlignment: MainAxisAlignment.center,

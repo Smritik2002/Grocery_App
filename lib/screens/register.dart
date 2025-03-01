@@ -166,10 +166,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                   onPressed: _register,
                                   child: const Text("Register"),
                                   style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
-                                    padding: MaterialStateProperty.all(
+                                    backgroundColor: WidgetStateProperty.all(Colors.grey),
+                                    padding: WidgetStateProperty.all(
                                         const EdgeInsets.symmetric(vertical: 14.0)),
-                                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                    shape: WidgetStateProperty.all(RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12),
                                     )),
                                   ),

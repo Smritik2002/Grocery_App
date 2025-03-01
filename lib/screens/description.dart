@@ -284,7 +284,6 @@ class RecommendationSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(itemId);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -300,36 +299,67 @@ class RecommendationSection extends StatelessWidget {
           ),
         ),
         FutureBuilder<List<Recommendation>>(
-          future: ApiService().fetchRecommendations(itemId,user_id),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
+          future: ApiService().fetchRecommendations(itemId, user_id),
+          builder: (context, recSnapshot) {
+            if (recSnapshot.connectionState == ConnectionState.waiting) {
               return _buildLoadingShimmer();
-            } else if (snapshot.hasError) {
+            } else if (recSnapshot.hasError) {
               return Center(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    "Error: ${snapshot.error}",
+                    "Error: ${recSnapshot.error}",
                     style: const TextStyle(color: Colors.red),
                   ),
                 ),
               );
-            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            } else if (!recSnapshot.hasData || recSnapshot.data!.isEmpty) {
               return const Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Center(child: Text("No recommendations available")),
               );
             } else {
-              return SizedBox(
-                height: 200, // Fixed height for the horizontal scroll
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal, // Horizontal scrolling
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    var item = snapshot.data![index];
-                    return _buildRecommendationCard(item);
-                  },
-                ),
+              return FutureBuilder<List<ShopItem>>(
+                future: ApiService().getShopItems(), // Fetch shop items
+                builder: (context, shopSnapshot) {
+                  if (shopSnapshot.connectionState == ConnectionState.waiting) {
+                    return _buildLoadingShimmer();
+                  } else if (shopSnapshot.hasError) {
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          "Error: ${shopSnapshot.error}",
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    );
+                  } else if (!shopSnapshot.hasData || shopSnapshot.data!.isEmpty) {
+                    return const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Center(child: Text("No shop items available")),
+                    );
+                  } else {
+                    List<ShopItem> shopItems = shopSnapshot.data!;
+                    return SizedBox(
+                      height: 200,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: recSnapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          var recommendedItem = recSnapshot.data![index];
+                          var matchingShopItem = shopItems.firstWhere(
+                            (shopItem) => shopItem.name == recommendedItem.name,
+                            orElse: () => ShopItem( 
+                              id: index,
+                              name: recommendedItem.name, image: "", price: 0, rating: 0, description: "", color: "", visitCount: 0),
+                          );
+                          return _buildRecommendationCard(recommendedItem, matchingShopItem.image);
+                        },
+                      ),
+                    );
+                  }
+                },
               );
             }
           },
@@ -360,9 +390,9 @@ class RecommendationSection extends StatelessWidget {
   }
 
   /// Card UI for each recommended item
-  Widget _buildRecommendationCard(Recommendation item) {
+  Widget _buildRecommendationCard(Recommendation item, String imageUrl) {
     return Container(
-      width: 150, // Adjust width for a compact look
+      width: 150,
       margin: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -383,8 +413,7 @@ class RecommendationSection extends StatelessWidget {
             child: ClipRRect(
               borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
               child: Image.network(
-                // item.imageUrl ??
-                 "https://via.placeholder.com/150",
+                imageUrl.isNotEmpty ? imageUrl : "https://via.placeholder.com/150",
                 width: double.infinity,
                 height: 100,
                 fit: BoxFit.cover,
@@ -404,26 +433,6 @@ class RecommendationSection extends StatelessWidget {
                 ),
                 Text(item.score.toStringAsFixed(2)),
                 const SizedBox(height: 4),
-                // Text(
-                //   "\$${item.price?.toStringAsFixed(2) ?? "N/A"}",
-                //   style: const TextStyle(
-                //     fontSize: 14,
-                //     color: Colors.teal,
-                //     fontWeight: FontWeight.w600,
-                //   ),
-                // ),
-                const SizedBox(height: 4),
-                
-                // Row(
-                //   children: [
-                //     const Icon(Icons.star, color: Colors.amber, size: 18),
-                //     const SizedBox(width: 4),
-                //     // Text(
-                //     //   item.rating?.toStringAsFixed(1) ?? "N/A",
-                //     //   style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                //     // ),
-                //   ],
-                // ),
               ],
             ),
           ),

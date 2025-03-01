@@ -52,7 +52,8 @@ class GroceryRecommendationSystem:
             columns=self.shopitems_df['ItemName'])
 
     def compute_hybrid_similarity(self):
-        return pd.DataFrame((0.5 * self.item_similarity_df.values) + (0.5 * self.item_content_similarity_df.values),
+        # (print(0.25 * self.item_similarity_df.values))
+        return pd.DataFrame((0.25 * self.item_similarity_df.values) + (0.75 * self.item_content_similarity_df.values),
                             index=self.shopitems_df['ItemName'], columns=self.shopitems_df['ItemName'])
 
     def recommend_items_for_user(self, user_id, top_n=5):
@@ -112,3 +113,4 @@ class GroceryRecommendationSystem:
 
 
 # import_vegetables_from_csv("/home/mango/django/Grocery_App/backend/data/fruits_vegetables_dataset.csv")
+

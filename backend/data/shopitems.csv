@@ -1,5 +1,5 @@
-ID,ItemName,Price ($),Color,Description,Rating,Visit Count
-57,Corn,2.0,Yellow,Sweet and starchy grain vegetable.,5,125
+ID,ItemName,Price($),Color,Description,Rating,Visit Count
+57,Corn,2,Yellow,Sweet and starchy grain vegetable.,5,125
 56,Okra,1.6,Green,Slimy-textured vegetable great for soups.,3,85
 55,Leek,1.8,Green,Mild onion-flavored vegetable.,4,90
 54,Turnip,1.7,White,Root vegetable with a slightly bitter taste.,3,75
@@ -15,21 +15,21 @@ ID,ItemName,Price ($),Color,Description,Rating,Visit Count
 44,Radish,1.3,Red,Spicy and crisp root vegetable.,3,80
 43,Sweet Potato,2.2,Orange,Sweet and starchy root vegetable.,4,95
 42,Pumpkin,3.5,Orange,Seasonal vegetable rich in nutrients.,5,120
-41,Cauliflower,2.0,White,Versatile vegetable often used in cooking.,4,100
+41,Cauliflower,2,White,Versatile vegetable often used in cooking.,4,100
 40,Garlic,1.1,White,Pungent bulb used for flavoring dishes.,5,135
 39,Onion,0.8,White,Essential ingredient in many savory dishes.,4,110
-38,Lettuce,1.0,Green,Crispy leafy vegetable used in salads.,5,125
-37,Eggplant,2.0,Purple,"Rich and meaty vegetable, great for grilling.",3,75
+38,Lettuce,1,Green,Crispy leafy vegetable used in salads.,5,125
+37,Eggplant,2,Purple,"Rich and meaty vegetable, great for grilling.",3,75
 36,Zucchini,1.3,Green,Mild-flavored squash used in cooking.,4,95
 35,Bell Pepper,1.8,Red,"Sweet and crunchy, great for salads.",3,85
 34,Spinach,1.5,Green,Leafy green packed with iron and vitamins.,4,100
 33,Cucumber,1.2,Green,Hydrating vegetable with a crisp texture.,5,115
 32,Tomato,0.9,Red,Versatile fruit often used in cooking.,4,130
 31,Broccoli,1.75,Green,Nutritious vegetable high in fiber.,3,90
-30,Carrot,1.0,Orange,Crunchy vegetable rich in beta-carotene.,4,105
+30,Carrot,1,Orange,Crunchy vegetable rich in beta-carotene.,4,105
 29,Avocado,2.1,Green,Creamy fruit rich in healthy fats.,5,140
 28,Coconut,2.7,Brown,Hard-shelled fruit with sweet water inside.,4,85
-27,Pomegranate,3.0,Red,Juicy seeds with a tart and sweet taste.,5,125
+27,Pomegranate,3,Red,Juicy seeds with a tart and sweet taste.,5,125
 26,Papaya,2.5,Orange,Tropical fruit with soft and sweet flesh.,3,70
 25,Plum,2.2,Purple,Sweet and tart fruit with smooth skin.,4,95
 24,Pear,1.9,Green,Soft and sweet fruit with a mild flavor.,3,80
@@ -41,10 +41,11 @@ ID,ItemName,Price ($),Color,Description,Rating,Visit Count
 18,Strawberry,3.2,Red,"Fresh and tangy, great for smoothies.",5,150
 17,Pineapple,2.8,Brown,"Tart and sweet, perfect for desserts.",4,130
 16,Mango,1.75,Yellow,Sweet tropical fruit with rich flavor.,5,200
-15,Watermelon,3.0,Green,Refreshing summer fruit with high water content.,4,85
+15,Watermelon,3,Green,Refreshing summer fruit with high water content.,4,85
 14,Grapes,2.5,Purple,"Sweet and juicy, ideal for fresh eating.",5,140
 13,Orange,0.8,Orange,Citrusy and full of vitamin C.,3,110
 12,Banana,0.5,Yellow,"Rich in potassium, great for energy.",4,95
 11,Apple,1.2,Red,"Crisp and juicy, perfect for snacks.",5,120
-10,Litchi,20.0,red,"lychee, (Litchi chinensis), evergreen tree of the soapberry family (Sapindaceae), grown for its edible fruit. Lychee is native to Southeast Asia and has been a favourite fruit of the Cantonese since ancient times. The fruit is usually eaten fresh but can also be canned or dried. The flavour of the fresh pulp is aromatic and musky, and the dried pulp is acidic and very sweet.",1,0
-6,Chicken,99.0,pink,"The chicken is a bird that people all over the world raise for its meat, eggs, and feathers. It belongs to the group of domesticated, or tame, birds called poultry. Chickens have short wings and a heavy body. This makes it hard for them to fly very far.",5,0
+10,Litchi,20,red,"lychee, (Litchi chinensis), evergreen tree of the soapberry family (Sapindaceae), grown for its edible fruit. Lychee is native to Southeast Asia and has been a favourite fruit of the Cantonese since ancient times. The fruit is usually eaten fresh but can also be canned or dried. The flavour of the fresh pulp is aromatic and musky, and the dried pulp is acidic and very sweet.",1,99
+8,Potato,22,brown,"Potato fruits are a succulent but inedible spherical, yellow-green berry, up to 4cm across. Underground, the edible root forms a tuber that can be a range of colours, sizes and shapes, depending on the cultivated variety (cultivar).",5,99
+6,Chicken,99,pink,"The chicken is a bird that people all over the world raise for its meat, eggs, and feathers. It belongs to the group of domesticated, or tame, birds called poultry. Chickens have short wings and a heavy body. This makes it hard for them to fly very far.",5,100

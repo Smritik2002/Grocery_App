@@ -53,7 +53,7 @@ class CartPage extends StatelessWidget {
                                   value.cartItems[index][0],
                                 ),
                                 subtitle:
-                                    Text('\$' + value.cartItems[index][1]),
+                                    Text('Rs ' + value.cartItems[index][1]),
                                 trailing: IconButton(
                                   icon: const Icon(Icons.cancel),
                                   onPressed: () => Provider.of<CartModel>(
@@ -83,7 +83,7 @@ class CartPage extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       ),
                       Text(
-                        '\$${value.calculateTotal()}',
+                        'Rs ${value.calculateTotal()}',
                         style: const TextStyle(
                             color: Colors.white,
                             fontSize: 15,

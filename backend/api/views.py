@@ -14,6 +14,7 @@ from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 import pandas as pd
+import os
 
 # Create your views here.
 
@@ -61,11 +62,19 @@ def register_user(request):
 
     user = User.objects.create_user(username=username, email=email, password=password)
     Profile.objects.create(user=user, age=age, interest=interest)
+    
+    # Correct the directory path
+    directory = "E:/Grocery_App/backend/data"
+    
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    
     new_data = pd.DataFrame([[user.id, username, email, age, interest]], columns=[
                             'ID', 'Username', 'Email', 'Age', 'Interest'])
-    new_data.to_csv("/home/mango/django/Grocery_App/backend/data/profiles.csv", mode='a', header=False, index=False)
+    
+    new_data.to_csv(os.path.join(directory, "profiles.csv"), mode='a', header=False, index=False)
+    
     return Response({"message": "User registered successfully."}, status=201)
-
 
 @api_view(['POST'])
 def login(request):

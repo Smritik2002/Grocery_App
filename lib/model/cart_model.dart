@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 
 class CartModel extends ChangeNotifier {
   final List _shopItems = [
-    ["Apple", "5", "assets/images/apple1.png", Colors.red],
-    ["Watermelon", "15", "assets/images/watermelon.png", Colors.green],
-    ["Banana", "15", "assets/images/banana.png", Colors.yellow],
-    ["Orange", "35", "assets/images/orange.png", Colors.orange],
+    ["Chicken", "99", "assets/images/chicken.png", Colors.redAccent],
+    ["Potato", "22", "assets/images/potato.png", Colors.brown],
+    ["Litchi", "20", "assets/images/Litchi.png", Colors.redAccent],
+    ["Apple", "1.2", "assets/images/apple1.png", Colors.red],
+    ["Banana", "0.5", "assets/images/banana.png", Colors.yellow],
+    ["Orange", "0.8", "assets/images/orange.png", Colors.orange],
+    ["Grapes", "2.5", "assets/images/grapes.jpg", Colors.green],
+    ["Watermelon", "3", "assets/images/watermelon.png", Colors.green],
     ["Cherry", "35", "assets/images/cherry1.png", Colors.red],
-    ["Chicken", "15", "assets/images/chicken.png", Colors.redAccent],
     ["Cabbage", "15", "assets/images/cabbage.png", Colors.greenAccent],
     ["Potato", "15", "assets/images/potato.png", Colors.brown],
     ["Avocado", "15", "assets/images/avocado.png", Colors.greenAccent],

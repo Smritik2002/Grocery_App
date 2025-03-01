@@ -73,6 +73,8 @@ Future<List<RatingModel>> ratings() async {
   }
 }
  Future<List<Recommendation>> fetchRecommendations(int itemId, int user_id) async {
+  print(itemId);
+  print(user_id);
   final response = await http.get(Uri.parse("http://10.0.2.2:8000/api/recommend/$itemId/$user_id/"));
  if (response.statusCode == 200) {
     final Map<String, dynamic> jsonResponse = json.decode(response.body); // Decode as Map
@@ -80,11 +82,10 @@ Future<List<RatingModel>> ratings() async {
     
     print(response.body);
     
-    // Convert the list of lists into Recommendation objects
     return data.map((item) {
       return Recommendation(
-        name: item[0],  // First element (name)
-        score: item[1], // Second element (score)
+        name: item[0],  
+        score: item[1], 
       );
     }).toList();
   } else {

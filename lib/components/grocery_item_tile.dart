@@ -88,6 +88,8 @@ class GroceryItemTile extends StatelessWidget {
           ),
         ),
         onTap: (){
+          print("Item id is $id");
+          print("User id is $user_id");
           Navigator.push(context, MaterialPageRoute(builder: (context) =>  Description(
             user_id: user_id,
             item_id:id,

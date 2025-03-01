@@ -2,6 +2,7 @@
   import 'package:ecommerceapp/model/cart_model.dart';
   import 'package:ecommerceapp/model/shop_model.dart';
   import 'package:ecommerceapp/screens/cart_page.dart';
+import 'package:ecommerceapp/screens/login_page.dart';
   import 'package:ecommerceapp/service/api_service.dart';
   import 'package:flutter/material.dart';
   import 'package:provider/provider.dart';
@@ -30,14 +31,7 @@
           appBar: AppBar(
             backgroundColor: Colors.teal,
             title: const Text("Shop"),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.search),
-                onPressed: () {
-                  // Implement search functionality here
-                },
-              ),
-            ],
+            
           ),
           drawer: Drawer(
             child: ListView(
@@ -91,7 +85,11 @@
                   leading: const Icon(Icons.logout),
                   title: const Text('Logout'),
                   onTap: () {
-                    // Handle logout
+                     Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+      (Route<dynamic> route) => false,
+    );
                   },
                 ),
               ],
